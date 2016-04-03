@@ -50,4 +50,10 @@ class ArticleController extends Controller
         return redirect('/article')->with(['create_success'=>'更新成功']);
     }
 
+    public function show($id)
+    {
+        $article = Article::findOrFail($id);
+        return view('article.show',['article'=>$article]);
+    }
+
 }
