@@ -37,4 +37,17 @@ class ArticleController extends Controller
         }
     }
 
+    public function edit($id)
+    {
+        $article = Article::findOrFail($id);
+        return view('article.edit',['article'=>$article]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $article = Article::findOrFail($id);
+        $article->update($request->except('id'));
+        return redirect('/article')->with(['create_success'=>'更新成功']);
+    }
+
 }

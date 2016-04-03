@@ -18,7 +18,7 @@
                 <td><input type="checkbox" name="check" value="{{$article->id}}"></td>
                 <td>{{$article->id}}</td>
                 <td>{{$article->title}}</td>
-                <td><a href="{{url('article',$article->id.'/edit')}}">编辑</a></td>
+                <td><a href="{{url('article/'.$article->id.'/edit')}}">编辑</a></td>
             </tr>
             @empty
             <tr>
