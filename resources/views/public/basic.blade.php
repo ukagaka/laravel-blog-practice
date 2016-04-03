@@ -7,6 +7,7 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="http://v3.bootcss.com/favicon.ico">
 
     <title>Dashboard Template for Bootstrap</title>
@@ -42,7 +43,11 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-            @yield('menu')
+            @section('menu')
+                <li><a href="/article/create">发表文章</a></li>
+                <li><a href="#">Analytics</a></li>
+                <li><a href="#">Export</a></li>
+            @show
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             @yield('content')
@@ -55,6 +60,13 @@
 <script src="{{asset('lib/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('lib/js/holder.min.js')}}"></script>
 <script src="{{asset('lib/js/ie10-viewport-bug-workaround.js')}}"></script>
-
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
+@yield('script')
 
 </body></html>

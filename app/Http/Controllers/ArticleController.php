@@ -18,12 +18,23 @@ class ArticleController extends Controller
 
     public function store(Request $request)
     {
-        Article::create($request->all());
+        $article = Article::create($request->all());
+        if($article){
+            return redirect('/article')->with(['create_success'=>"创建成功"]);
+        }
     }
 
     public function create()
     {
+        return view('article.create');
+    }
 
+    public function destroy(Request $request)
+    {
+        $res = Article::whereIn('id',$request->ids)->delete();
+        if($res){
+            return $res;
+        }
     }
 
 }
