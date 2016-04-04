@@ -12,7 +12,12 @@
         <div class="form-group">
             <label for="title" class="col-sm-2 control-label">标题</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" id="title" placeholder="title" name="title">
+                <input type="text" class="form-control" id="title" placeholder="title" name="title" value="{{old('title')}}">
+                @if($errors->has('title'))
+                    <span class="help-block">
+                        {{$errors->first('title')}}
+                    </span>
+                @endif
             </div>
         </div>
         {{--<div class="form-group">--}}
@@ -24,7 +29,12 @@
         <div class="form-group">
             <label for="content" class="col-sm-2 control-label">内容</label>
             <div class="col-sm-8">
-                <textarea name="content" id="content" cols="30" rows="10"></textarea>
+                <textarea name="content" id="content" cols="30" rows="10" value="{{old('content')}}"></textarea>
+                @if($errors->has('content'))
+                    <span class="help-block">
+                        {{$errors->first('content')}}
+                    </span>
+                @endif
             </div>
         </div>
         <div class="form-group">

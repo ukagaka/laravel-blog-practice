@@ -18,6 +18,10 @@ class ArticleController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'title' => 'min:6|required',
+            'content' => 'required' ,
+        ]);
         $article = Article::create($request->all());
         if($article){
             return redirect('/article')->with(['create_success'=>"创建成功"]);
@@ -45,6 +49,10 @@ class ArticleController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'title' => 'min:6|required',
+            'content' => 'required',
+        ]);
         $article = Article::findOrFail($id);
         $article->update($request->except('id'));
         return redirect('/article')->with(['create_success'=>'更新成功']);
