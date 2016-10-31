@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use PHPUnit_Framework_Assert as PHPUnit;
+use PHPUnit_Framework_ExpectationFailedException;
 use Symfony\Component\HttpFoundation\File\UploadedFile as SymfonyUploadedFile;
 
 trait MakesHttpRequests
@@ -252,7 +253,13 @@ trait MakesHttpRequests
             return $this;
         }
 
-        return $this->seeJsonContains($data, $negate);
+        try {
+            $this->seeJsonEquals($data);
+
+            return $this;
+        } catch (PHPUnit_Framework_ExpectationFailedException $e) {
+            return $this->seeJsonContains($data, $negate);
+        }
     }
 
     /**
@@ -321,7 +328,7 @@ trait MakesHttpRequests
 
             $this->{$method}(
                 Str::contains($actual, $expected),
-                ($negate ? 'Found unexpected' : 'Unable to find')." JSON fragment [{$expected}] within [{$actual}]."
+                ($negate ? 'Found unexpected' : 'Unable to find').' JSON fragment'.PHP_EOL."[{$expected}]".PHP_EOL.'within'.PHP_EOL."[{$actual}]."
             );
         }
 
@@ -376,7 +383,7 @@ trait MakesHttpRequests
             $expected = substr($expected, 0, -1);
         }
 
-        return $expected;
+        return trim($expected);
     }
 
     /**
@@ -459,10 +466,12 @@ trait MakesHttpRequests
         $actual = $encrypted
             ? $this->app['encrypter']->decrypt($cookieValue) : $cookieValue;
 
-        return $this->assertEquals(
+        $this->assertEquals(
             $actual, $value,
             "Cookie [{$cookieName}] was found, but value [{$actual}] does not match [{$value}]."
         );
+
+        return $this;
     }
 
     /**
@@ -615,26 +624,30 @@ trait MakesHttpRequests
     /**
      * Assert that the client response has an OK status code.
      *
-     * @return void
+     * @return $this
      */
     public function assertResponseOk()
     {
         $actual = $this->response->getStatusCode();
 
-        return PHPUnit::assertTrue($this->response->isOk(), "Expected status code 200, got {$actual}.");
+        PHPUnit::assertTrue($this->response->isOk(), "Expected status code 200, got {$actual}.");
+
+        return $this;
     }
 
     /**
      * Assert that the client response has a given code.
      *
      * @param  int  $code
-     * @return void
+     * @return $this
      */
     public function assertResponseStatus($code)
     {
         $actual = $this->response->getStatusCode();
 
-        return PHPUnit::assertEquals($code, $this->response->getStatusCode(), "Expected status code {$code}, got {$actual}.");
+        PHPUnit::assertEquals($code, $this->response->getStatusCode(), "Expected status code {$code}, got {$actual}.");
+
+        return $this;
     }
 
     /**
@@ -642,7 +655,7 @@ trait MakesHttpRequests
      *
      * @param  string|array  $key
      * @param  mixed  $value
-     * @return void
+     * @return $this
      */
     public function assertViewHas($key, $value = null)
     {
@@ -656,16 +669,20 @@ trait MakesHttpRequests
 
         if (is_null($value)) {
             PHPUnit::assertArrayHasKey($key, $this->response->original->getData());
+        } elseif ($value instanceof \Closure) {
+            PHPUnit::assertTrue($value($this->response->original->$key));
         } else {
             PHPUnit::assertEquals($value, $this->response->original->$key);
         }
+
+        return $this;
     }
 
     /**
      * Assert that the view has a given list of bound data.
      *
      * @param  array  $bindings
-     * @return void
+     * @return $this
      */
     public function assertViewHasAll(array $bindings)
     {
@@ -676,13 +693,15 @@ trait MakesHttpRequests
                 $this->assertViewHas($key, $value);
             }
         }
+
+        return $this;
     }
 
     /**
      * Assert that the response view is missing a piece of bound data.
      *
      * @param  string  $key
-     * @return void
+     * @return $this
      */
     public function assertViewMissing($key)
     {
@@ -691,6 +710,8 @@ trait MakesHttpRequests
         }
 
         PHPUnit::assertArrayNotHasKey($key, $this->response->original->getData());
+
+        return $this;
     }
 
     /**
@@ -698,7 +719,7 @@ trait MakesHttpRequests
      *
      * @param  string  $uri
      * @param  array   $with
-     * @return void
+     * @return $this
      */
     public function assertRedirectedTo($uri, $with = [])
     {
@@ -707,6 +728,8 @@ trait MakesHttpRequests
         PHPUnit::assertEquals($this->app['url']->to($uri), $this->response->headers->get('Location'));
 
         $this->assertSessionHasAll($with);
+
+        return $this;
     }
 
     /**
@@ -715,11 +738,11 @@ trait MakesHttpRequests
      * @param  string  $name
      * @param  array   $parameters
      * @param  array   $with
-     * @return void
+     * @return $this
      */
     public function assertRedirectedToRoute($name, $parameters = [], $with = [])
     {
-        $this->assertRedirectedTo($this->app['url']->route($name, $parameters), $with);
+        return $this->assertRedirectedTo($this->app['url']->route($name, $parameters), $with);
     }
 
     /**
@@ -728,11 +751,11 @@ trait MakesHttpRequests
      * @param  string  $name
      * @param  array   $parameters
      * @param  array   $with
-     * @return void
+     * @return $this
      */
     public function assertRedirectedToAction($name, $parameters = [], $with = [])
     {
-        $this->assertRedirectedTo($this->app['url']->action($name, $parameters), $with);
+        return $this->assertRedirectedTo($this->app['url']->action($name, $parameters), $with);
     }
 
     /**

@@ -62,6 +62,18 @@ trait InteractsWithPages
     }
 
     /**
+     * Visit the given named route with a GET request.
+     *
+     * @param  string  $route
+     * @param  array  $parameters
+     * @return $this
+     */
+    public function visitRoute($route, $parameters = [])
+    {
+        return $this->makeRequest('GET', route($route, $parameters));
+    }
+
+    /**
      * Make a request to the application and create a Crawler instance.
      *
      * @param  string  $method
@@ -173,6 +185,18 @@ trait InteractsWithPages
     }
 
     /**
+     * Assert that the current page matches a given named route.
+     *
+     * @param  string  $route
+     * @param  array  $parameters
+     * @return $this
+     */
+    protected function seeRouteIs($route, $parameters = [])
+    {
+        return $this->seePageIs(route($route, $parameters));
+    }
+
+    /**
      * Assert that a given page successfully loaded.
      *
      * @param  string  $uri
@@ -211,6 +235,8 @@ trait InteractsWithPages
         $callback();
 
         array_pop($this->subCrawlers);
+
+        return $this;
     }
 
     /**
@@ -230,7 +256,7 @@ trait InteractsWithPages
     /**
      * Assert the given constraint.
      *
-     * @param  string  $constraint
+     * @param  \Illuminate\Foundation\Testing\Constraints\PageConstraint  $constraint
      * @param  bool  $reverse
      * @param  string  $message
      * @return $this

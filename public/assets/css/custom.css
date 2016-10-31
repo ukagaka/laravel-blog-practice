@@ -1,0 +1,36 @@
+/**
+ *
+ * Apply your custom CSS here
+ *
+*/
+
+body {	
+}
+
+a {
+}
+
+.repimg img{
+    max-height:100px;
+    margin-right:10px
+}
+.repcon {
+    max-height:200px;
+    max-width:400px;
+    overflow: auto;
+}
+.pop-up-border {
+    background: #fafafa;
+    border: 1px solid #68b828;
+    width:300px;
+    height:200px;
+    padding: 20px;
+}
+
+.pop-up-window {
+    padding: 0px;
+}
+
+.rev-tab-input {
+    display:none;
+}

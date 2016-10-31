@@ -14,21 +14,14 @@ class JobExceptionOccurred
     /**
      * The job instance.
      *
-     * @var \Illuminate\Contracts\Jobs\Job
+     * @var \Illuminate\Contracts\Queue\Job
      */
     public $job;
 
     /**
-     * The data given to the job.
-     *
-     * @var array
-     */
-    public $data;
-
-    /**
      * The exception instance.
      *
-     * @var \Throwable
+     * @var \Exception
      */
     public $exception;
 
@@ -36,15 +29,13 @@ class JobExceptionOccurred
      * Create a new event instance.
      *
      * @param  string  $connectionName
-     * @param  \Illuminate\Contracts\Jobs\Job  $job
-     * @param  array  $data
-     * @param  \Throwable  $exception
+     * @param  \Illuminate\Contracts\Queue\Job  $job
+     * @param  \Exception  $exception
      * @return void
      */
-    public function __construct($connectionName, $job, $data, $exception)
+    public function __construct($connectionName, $job, $exception)
     {
         $this->job = $job;
-        $this->data = $data;
         $this->exception = $exception;
         $this->connectionName = $connectionName;
     }

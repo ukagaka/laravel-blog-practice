@@ -44,6 +44,13 @@ class Route
     protected $action;
 
     /**
+     * The controller instance.
+     *
+     * @var mixed
+     */
+    protected $controller;
+
+    /**
      * The default values for the route.
      *
      * @var array
@@ -133,45 +140,80 @@ class Route
         $this->container = $this->container ?: new Container;
 
         try {
-            if (! is_string($this->action['uses'])) {
-                return $this->runCallable($request);
+            if ($this->isControllerAction()) {
+                return $this->runController();
             }
 
-            return $this->runController($request);
+            return $this->runCallable();
         } catch (HttpResponseException $e) {
             return $e->getResponse();
         }
     }
 
     /**
-     * Run the route action and return the response.
+     * Checks whether the route's action is a controller.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
+     * @return bool
      */
-    protected function runCallable(Request $request)
+    protected function isControllerAction()
     {
-        $parameters = $this->resolveMethodDependencies(
-            $this->parametersWithoutNulls(), new ReflectionFunction($this->action['uses'])
-        );
-
-        return call_user_func_array($this->action['uses'], $parameters);
+        return is_string($this->action['uses']);
     }
 
     /**
      * Run the route action and return the response.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @return mixed
+     */
+    protected function runCallable()
+    {
+        $parameters = $this->resolveMethodDependencies(
+            $this->parametersWithoutNulls(), new ReflectionFunction($this->action['uses'])
+        );
+
+        $callable = $this->action['uses'];
+
+        return $callable(...array_values($parameters));
+    }
+
+    /**
+     * Run the route action and return the response.
+     *
      * @return mixed
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
-    protected function runController(Request $request)
+    protected function runController()
     {
-        list($class, $method) = explode('@', $this->action['uses']);
+        return (new ControllerDispatcher($this->container))->dispatch(
+            $this, $this->getController(), $this->getControllerMethod()
+        );
+    }
 
-        return (new ControllerDispatcher($this->router, $this->container))
-                    ->dispatch($this, $request, $class, $method);
+    /**
+     * Get the controller instance for the route.
+     *
+     * @return mixed
+     */
+    protected function getController()
+    {
+        list($class) = explode('@', $this->action['uses']);
+
+        if (! $this->controller) {
+            $this->controller = $this->container->make($class);
+        }
+
+        return $this->controller;
+    }
+
+    /**
+     * Get the controller method used for the route.
+     *
+     * @return string
+     */
+    protected function getControllerMethod()
+    {
+        return explode('@', $this->action['uses'])[1];
     }
 
     /**
@@ -227,6 +269,16 @@ class Route
     }
 
     /**
+     * Get all middleware, including the ones from the controller.
+     *
+     * @return array
+     */
+    public function gatherMiddleware()
+    {
+        return array_merge($this->middleware(), $this->controllerMiddleware());
+    }
+
+    /**
      * Get or set the middlewares attached to the route.
      *
      * @param  array|string|null $middleware
@@ -235,46 +287,40 @@ class Route
     public function middleware($middleware = null)
     {
         if (is_null($middleware)) {
-            $middlewares = (array) Arr::get($this->action, 'middleware', []);
-
-            if (is_string($this->action['uses'])) {
-                $middlewares = array_merge(
-                    $middlewares, $this->controllerMiddleware()
-                );
-            }
-
-            return $middlewares;
+            return (array) Arr::get($this->action, 'middleware', []);
         }
 
         if (is_string($middleware)) {
-            $middleware = [$middleware];
+            $middleware = func_get_args();
         }
 
-        $this->action['middleware'] = array_unique(array_merge(
+        $this->action['middleware'] = array_merge(
             (array) Arr::get($this->action, 'middleware', []), $middleware
-        ));
+        );
 
         return $this;
     }
 
     /**
-     * Get the controller middleware for the route.
+     * Get the middleware for the route's controller.
      *
      * @return array
      */
-    protected function controllerMiddleware()
+    public function controllerMiddleware()
     {
-        list($class, $method) = explode('@', $this->action['uses']);
+        if (! $this->isControllerAction()) {
+            return [];
+        }
 
-        $controller = $this->container->make($class);
-
-        return (new ControllerDispatcher($this->router, $this->container))
-                    ->getMiddleware($controller, $method);
+        return ControllerDispatcher::getMiddleware(
+            $this->getController(), $this->getControllerMethod()
+        );
     }
 
     /**
      * Get the parameters that are listed in the route / controller signature.
      *
+     * @param string|null  $subClass
      * @return array
      */
     public function signatureParameters($subClass = null)
@@ -380,10 +426,7 @@ class Route
     public function parameters()
     {
         if (isset($this->parameters)) {
-            return array_map(function ($value) {
-                return is_string($value) ? rawurldecode($value) : $value;
-
-            }, $this->parameters);
+            return $this->parameters;
         }
 
         throw new LogicException('Route is not bound.');
@@ -456,9 +499,7 @@ class Route
         // compile that and get the parameter matches for this domain. We will then
         // merge them into this parameters array so that this array is completed.
         $params = $this->matchToKeys(
-
             array_slice($this->bindPathParameters($request), 1)
-
         );
 
         // If the route has a regular expression for the host part of the URI, we will
@@ -527,8 +568,8 @@ class Route
      */
     protected function replaceDefaults(array $parameters)
     {
-        foreach ($parameters as $key => &$value) {
-            $value = isset($value) ? $value : Arr::get($this->defaults, $key);
+        foreach ($parameters as $key => $value) {
+            $parameters[$key] = isset($value) ? $value : Arr::get($this->defaults, $key);
         }
 
         foreach ($this->defaults as $key => $value) {
@@ -574,9 +615,7 @@ class Route
         }
 
         if (is_string($action['uses']) && ! Str::contains($action['uses'], '@')) {
-            throw new UnexpectedValueException(sprintf(
-                'Invalid route action: [%s]', $action['uses']
-            ));
+            $action['uses'] = $this->makeInvokableAction($action['uses']);
         }
 
         return $action;
@@ -590,9 +629,26 @@ class Route
      */
     protected function findCallable(array $action)
     {
-        return Arr::first($action, function ($key, $value) {
+        return Arr::first($action, function ($value, $key) {
             return is_callable($value) && is_numeric($key);
         });
+    }
+
+    /**
+     * Make an action for an invokable controller.
+     *
+     * @param  string $action
+     * @return string
+     */
+    protected function makeInvokableAction($action)
+    {
+        if (! method_exists($action, '__invoke')) {
+            throw new UnexpectedValueException(sprintf(
+                'Invalid route action: [%s]', $action
+            ));
+        }
+
+        return $action.'@__invoke';
     }
 
     /**
@@ -610,8 +666,8 @@ class Route
         // validator implementations. We will spin through each one making sure it
         // passes and then we will know if the route as a whole matches request.
         return static::$validators = [
-            new MethodValidator, new SchemeValidator,
-            new HostValidator, new UriValidator,
+            new UriValidator, new MethodValidator,
+            new SchemeValidator, new HostValidator,
         ];
     }
 
@@ -764,7 +820,8 @@ class Route
      */
     public function domain()
     {
-        return isset($this->action['domain']) ? $this->action['domain'] : null;
+        return isset($this->action['domain'])
+                ? str_replace(['http://', 'https://'], '', $this->action['domain']) : null;
     }
 
     /**
@@ -831,7 +888,29 @@ class Route
      */
     public function uses($action)
     {
-        return $this->setAction(array_merge($this->action, $this->parseAction($action)));
+        $action = is_string($action) ? $this->addGroupNamespaceToStringUses($action) : $action;
+
+        return $this->setAction(array_merge($this->action, $this->parseAction([
+            'uses' => $action,
+            'controller' => $action,
+        ])));
+    }
+
+    /**
+     * Parse a string based action for the "uses" fluent method.
+     *
+     * @param  string  $action
+     * @return string
+     */
+    protected function addGroupNamespaceToStringUses($action)
+    {
+        $groupStack = last($this->router->getGroupStack());
+
+        if (isset($groupStack['namespace']) && strpos($action, '\\') !== 0) {
+            return $groupStack['namespace'].'\\'.$action;
+        }
+
+        return $action;
     }
 
     /**

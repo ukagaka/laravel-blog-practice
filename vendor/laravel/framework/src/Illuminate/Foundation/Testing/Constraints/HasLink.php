@@ -71,7 +71,6 @@ class HasLink extends PageConstraint
     /**
      * Add a root if the URL is relative (helper method of the hasLink function).
      *
-     * @param  string  $url
      * @return string
      */
     protected function absoluteUrl()
@@ -90,7 +89,23 @@ class HasLink extends PageConstraint
      */
     public function getFailureDescription()
     {
-        $description = "a link with the text [{$this->text}]";
+        $description = "has a link with the text [{$this->text}]";
+
+        if ($this->url) {
+            $description .= " and the URL [{$this->url}]";
+        }
+
+        return $description;
+    }
+
+    /**
+     * Returns the reversed description of the failure.
+     *
+     * @return string
+     */
+    protected function getReverseFailureDescription()
+    {
+        $description = "does not have a link with the text [{$this->text}]";
 
         if ($this->url) {
             $description .= " and the URL [{$this->url}]";
