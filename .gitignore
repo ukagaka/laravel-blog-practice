@@ -1,6 +1,11 @@
 .idea/
 doc/
+vendor/
 .svn
 Thumbs.db
+src/config/
 src/artisan
+artisan
+storage/
 bootstrap/cache
+.env
