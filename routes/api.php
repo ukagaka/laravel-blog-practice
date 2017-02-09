@@ -17,4 +17,5 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
-Route::post('/loadimg', 'ApiController@loadImg');
+
+Route::get('/getchuncai', 'ApiController@getchuncai');

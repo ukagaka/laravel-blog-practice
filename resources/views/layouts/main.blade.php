@@ -8,7 +8,7 @@
     <meta name="description" content="Xenon Boostrap Admin Panel" />
     <meta name="author" content="" />
 
-    <title>股吧后台</title>
+    <title>伪春菜后台</title>
 
     <link rel="stylesheet" href="/assets/css/fonts/linecons/css/linecons.css">
     <link rel="stylesheet" href="/assets/css/fonts/fontawesome/css/font-awesome.min.css">
@@ -51,152 +51,38 @@
 
 
             <ul id="main-menu" class="main-menu">
-                <li @if(Request::is('guba') || Request::is('guba/create'))class="active"@endif>
-                    <a href="{{ url('/guba') }}">
+                <li @if(Request::is('pet') || Request::is('pet/info/*'))class="active"@endif>
+                    <a href="{{ url('/pet') }}">
                         <i class="fa-columns"></i>
-                        <span class="title">股吧管理</span>
+                        <span class="title">伪春菜管理</span>
                     </a>
-                    <ul @if(Request::is('guba') || Request::is('guba/create'))style="display: block;"@endif>
-                        <li @if(Request::is('guba'))class="active"@endif>
-                            <a href="{{ url('/guba') }}">
-                                <i class="entypo-flow-line"></i>
-                                <span class="title">股吧列表</span>
-                            </a>
-                        </li>
-                        <li @if(Request::is('guba/create'))class="active"@endif>
-                            <a href="{{ url('/guba/create') }}">
-                                <i class="entypo-flow-line"></i>
-                                <span class="title">新建股吧</span>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
-                <li @if(Request::is('post') || Request::is('post/create') || Request::is('post/audited'))class="active"@endif>
-                    <a href="{{ url('/post') }}">
+
+                <li @if(Request::is('user/info'))class="active"@endif >
+                    <a href="{{ url('user/info') }}">
                         <i class="fa-hospital-o"></i>
-                        <span class="title">帖子管理</span>
+                        <span class="title">个人设置</span>
                     </a>
-                    <ul @if(Request::is('post') || Request::is('post/create') || Request::is('post/audited'))style="display: block;"@endif>
-                        <li @if(Request::is('post'))class="active"@endif>
-                            <a href="{{ url('/post') }}">
-                                <i class="entypo-flow-line"></i>
-                                <span class="title">帖子列表</span>
-                            </a>
-                        </li>
-                        <li @if(Request::is('post/audited'))class="active"@endif>
-                            <a href="{{ url('/post/audited') }}">
-                                <i class="entypo-flow-line"></i>
-                                <span class="title">待审核</span>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
-                <li @if(Request::is('replay') || Request::is('report'))class="active"@endif>
-                    <a href="{{ url('/replay') }}">
-                        <i class="linecons-comment"></i>
-                        <span class="title">评论管理</span>
-                    </a>
-                    <ul @if(Request::is('replay') || Request::is('report'))style="display: block;"@endif>
-                        <li @if(Request::is('replay'))class="active"@endif>
-                            <a href="{{ url('/replay') }}">
-                                <span class="title">评论列表</span>
-                            </a>
-                        </li>
-                        <li @if(Request::is('report'))class="active"@endif>
-                            <a href="{{ url('/report') }}">
-                                <span class="title">举报管理</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li @if(Request::is('recomgro') || Request::is('recomgro/create') || Request::is('recomcon') || Request::is('recomcon/create'))class="active"@endif>
-                    <a href="{{ url('/recomgro') }}">
-                        <i class="fa-edit"></i>
-                        <span class="title">分类管理</span>
-                    </a>
-                    <ul @if(Request::is('recomgro') || Request::is('recomgro/create') || Request::is('recomcon') || Request::is('recomcon/create'))style="display: block;"@endif>
 
-                        <li @if(Request::is('recomgro') || Request::is('recomcon') || Request::is('recomcon/create'))class="active"@endif>
-                            <a href="{{ url('/recomgro') }}">
-                                <i class="entypo-flow-line"></i>
-                                <span class="title">分类列表</span>
-                            </a>
-                        </li>
-                        <li @if(Request::is('recomgro/create'))class="active"@endif>
-                            <a href="{{ url('/recomgro/create') }}">
-                                <i class="entypo-flow-line"></i>
-                                <span class="title">新建分类</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li @if(Request::is('tag') || Request::is('tagno'))class="active has-sub"@endif>
-                    <a href="{{ url('/tag') }}">
-                        <i class="linecons-tag"></i>
-                        <span class="title">标签管理</span>
-                    </a>
-                    <ul @if(Request::is('tag') || Request::is('tagno'))style="display: block;"@else class="has-sub" @endif>
-
-                        <li @if(Request::is('tag'))class="active"@endif>
-                            <a href="{{ url('/tag') }}">
-                                <i class="entypo-flow-line"></i>
-                                <span class="title">审核通过</span>
-                            </a>
-                        </li>
-                        <li @if(Request::is('tagno'))class="active"@endif>
-                            <a href="{{ url('/tagno') }}">
-                                <i class="entypo-flow-line"></i>
-                                <span class="title">未审核通过</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li @if(Request::is('nowords') || Request::is('nowords/create'))class="active"@endif>
-                    <a href="{{ url('/nowords') }}">
-                        <i class="linecons-cloud"></i>
-                        <span class="title">敏感词管理</span>
-                    </a>
-                    <ul @if(Request::is('nowords') || Request::is('nowords/create'))style="display: block;"@endif>
-                        <li @if(Request::is('nowords'))class="active"@endif>
-                            <a href="{{ url('/nowords') }}">
-                                <i class="entypo-flow-line"></i>
-                                <span class="title">敏感词列表</span>
-                            </a>
-                        </li>
-                        <li @if(Request::is('nowords/create'))class="active"@endif>
-                            <a href="{{ url('/nowords/create') }}">
-                                <i class="entypo-flow-line"></i>
-                                <span class="title">添加敏感词</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                @if(Auth::user()->groupid == 1)
-                    <li>
+                @if(Auth::user()->group_id == 1)
+                    <li @if(Request::is('pet/all'))class="active"@endif>
+                        <a href="{{ url('/pet/all') }}">
+                            <i class="fa-columns"></i>
+                            <span class="title">伪春菜</span>
+                        </a>
+                    </li>
+                    <li @if(Request::is('pet/create'))class="active"@endif >
+                        <a href="{{ url('pet/create') }}">
+                            <i class="fa-hospital-o"></i>
+                            <span class="title">新建伪春菜</span>
+                        </a>
+                    </li>
+                    <li @if(Request::is('user') || Request::is('user/edit/*'))class="active"@endif>
                         <a href="{{ url('/user') }}">
                             <i class="fa-user"></i>
-                            <span class="title">用户管理</span>
+                            <span class="title">管理员列表</span>
                         </a>
-                        <ul @if(Request::is('user') || Request::is('user/create') || Request::is('user/auth'))style="display: block;"@endif>
-                            <li>
-                                <a href="{{ url('/user') }}">
-                                    <i class="entypo-flow-line"></i>
-                                    <span class="title">管理员列表</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url('/user/create') }}">
-                                    <i class="entypo-flow-line"></i>
-                                    <span class="title">新建管理员</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url('/user/auth') }}">
-                                    <i class="entypo-flow-line"></i>
-                                    <span class="title">股吧用户管理</span>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                 @endif
             </ul>

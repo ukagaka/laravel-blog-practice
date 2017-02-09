@@ -6,19 +6,6 @@
         <div class="title-env">
             <h1 class="title">用户编辑</h1>
         </div>
-
-        <div class="breadcrumb-env">
-
-            <ol class="breadcrumb bc-1">
-                <li>
-                    <i class="fa-home"></i>用户管理
-                </li>
-                <li class="active">
-                    <strong>用户编辑</strong>
-                </li>
-            </ol>
-
-        </div>
     </div>
     <div class="row">
         <div class="col-sm-12">
@@ -53,7 +40,7 @@
                             <div class="col-sm-10">
                                 <select name="groupid" class="form-control">
                                     @foreach(\App\User::$group as $v => $k)
-                                        <option value="{{ $v }}" @if($data->groupid == $v) selected="selected" @endif>{{ $k }}</option>
+                                        <option value="{{ $v }}" @if($data->group_id == $v) selected="selected" @endif>{{ $k }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -76,8 +63,8 @@
 
                         <input type="hidden" value="{{ $data->id }}" name="id">
                         <button type="submit" class="btn btn-info btn-single pull-right">提交</button>
-                        </div>
-                    </form>
+                    </div>
+                </form>
             </div>
 
         </div>

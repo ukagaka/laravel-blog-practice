@@ -6,19 +6,6 @@
         <div class="title-env">
             <h1 class="title">用户列表</h1>
         </div>
-
-        <div class="breadcrumb-env">
-
-            <ol class="breadcrumb bc-1">
-                <li>
-                    <i class="fa-home"></i>用户管理
-                </li>
-                <li class="active">
-                    <a href="{{ url('/guba') }}"><strong>用户列表</strong></a>
-                </li>
-            </ol>
-
-        </div>
     </div>
 
     <div class="panel panel-default">
@@ -63,7 +50,7 @@
                             <td>{{ $v->id }}</td>
                             <td>{{ $v->name }}</td>
                             <td>{{ $v->email }}</td>
-                            <td>{{  \App\User::$group[$v->groupid] }}</td>
+                            <td>{{  \App\User::$group[$v->group_id] }}</td>
                             <td>
                                 <a href="{{ url('/user/edit/'.$v->id) }}" class="btn btn-warning btn-sm btn-icon icon-left">
                                     编辑
