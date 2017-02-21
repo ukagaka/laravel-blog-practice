@@ -63,15 +63,15 @@
             <div class="navbar-header">
                 <!-- Mobile Toggle Menu Button -->
                 <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
-                <a class="navbar-brand" href="./">伪春菜</a>
+                <a class="navbar-brand" href="/">伪春菜</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active"><a href="#" data-nav-section="home"><span>网站首页</span></a></li>
                     <li><a href="#" data-nav-section="services"><span>产品介绍</span></a></li>
-                    <li><a href="#" data-nav-section="press"><span>软件安装</span></a></li>
-                    <li><a href="#" data-nav-section="testimonials"><span>常见问题</span></a></li>
-                    @if (Route::has('login'))
+                    @if (Auth::user())
+                        <li><a target="_blank" href="{{ url('/pet') }}" >{{ Auth::user()->name }}</a></li>
+                    @else
                         <li><a target="_blank" href="{{ url('/login') }}" class="btn btn-primary btn-sm">登录</a></li>
                         <li><a target="_blank" href="{{ url('/register') }}" class="btn btn-primary btn-sm">注册</a></li>
                     @endif
@@ -91,8 +91,8 @@
                     <div class="col-md-8 col-md-offset-2 text-center">
                         <div class="fh5co-owl-text-wrap">
                             <div class="fh5co-owl-text">
-                                <h1 class="fh5co-lead to-animate">超实惠云免服务器4G冲浪新时代</h1>
-                                <h2 class="fh5co-sub-lead to-animate">抵制高价流量，让你使用专用的云免服务器，安全快捷！ </h2>
+                                <h1 class="fh5co-lead to-animate">二次元萌宠</h1>
+                                <h2 class="fh5co-sub-lead to-animate">web伪春菜，一种网页版的萌宠。</h2>
                                 <p class="to-animate-2">
                                     <a href="#" class="btn btn-primary btn-lg" data-nav-section="pricing">现在马上联系，获得技术支持</a>
                                 </p>
@@ -109,9 +109,11 @@
                     <div class="col-md-7 col-md-push-1 col-md-push-5 col-sm-7 col-sm-push-1 col-sm-push-5">
                         <div class="fh5co-owl-text-wrap">
                             <div class="fh5co-owl-text">
-                                <h1 class="fh5co-lead to-animate">安卓系统完美支持</h1>
-                                <h2 class="fh5co-sub-lead to-animate">操作人性化，流量软件上手很简单，使用仅需简单操作几步</h2>
-                                <p class="to-animate-2"><a href="and.html" class="btn btn-primary btn-lg">查看安装流程</a></p>
+                                <h1 class="fh5co-lead to-animate">二次元萌宠</h1>
+                                <h2 class="fh5co-sub-lead to-animate">web伪春菜，一种网页版的萌宠。</h2>
+                                <p class="to-animate-2">
+                                    <a href="#" class="btn btn-primary btn-lg" data-nav-section="pricing">现在马上联系，获得技术支持</a>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -131,7 +133,7 @@
                 <h2 class="to-animate">产品介绍</h2>
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2 to-animate">
-                        <h3>ZT云流量是一个让用户体验超低的价格，高品质的流量服务，坚决让运营商让利惠民，我们将以实力赢得大家的青睐！</h3>
+                        <h3>web伪春菜，就是一个网页端的小程式，开发的目的就是能为主人们处理电脑大大小小的事情，包括报时、聊天、对时、关心主人的身体等等，有如此多魅力这就是伪春菜吸引人的地方。</h3>
                     </div>
                 </div>
             </div>
@@ -140,179 +142,46 @@
             <div class="col-md-4">
                 <div class="box to-animate">
                     <div class="icon colored-5"><span><i class="icon-rocket"></i></span></div>
-                    <h3>网速提升</h3>
-                    <p>移动联通4G网络轻松提升，无束缚，轻松上5M/s</p>
+                    <h3>运送物资</h3>
+                    <p>每日任务可以通过完成每日任务获取到物资</p>
                 </div>
                 <div class="box to-animate">
                     <div class="icon colored-4"><span><i class="icon-heart"></i></span></div>
-                    <h3>无需设置</h3>
-                    <p>只需要输入您注册的账号和密码，轻松登录即可</p>
+                    <h3>问候</h3>
+                    <p>贴心提醒用户吃饭、睡觉</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="box to-animate">
                     <div class="icon colored-2"><span><i class="icon-screen-desktop"></i></span></div>
-                    <h3>安卓/苹果</h3>
-                    <p>支持目前最流行的机型，苹果IOS/安卓全机型兼容，我们坚持领先一步</p>
+                    <h3>显示三围</h3>
+                    <p>显示伪春菜的三围状态。包括等级，状态，活力，饥饿值等，用户后期的活动</p>
                 </div>
                 <div class="box to-animate">
                     <div class="icon colored-1"><span><i class="icon-mustache"></i></span></div>
-                    <h3>轻松连接</h3>
-                    <p>有信号的地方即可使用，连接速度极快，您只需消耗几kb流量即可完成登录。</p>
+                    <h3>周公解梦</h3>
+                    <p>输入关键字，进行解梦</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="box to-animate">
                     <div class="icon colored-3"><span><i class="icon-user"></i></span></div>
-                    <h3>操作简单</h3>
-                    <p>提供会员中心查询流量，在线充值流量服务，随时了解使用情况</p>
+                    <h3>触发试剧情</h3>
+                    <p>对话试剧情，对于特定页面进行有几率触发剧情</p>
                 </div>
                 <div class="box to-animate">
                     <div class="icon colored-6"><span><i class="icon-eye"></i></span></div>
-                    <h3>海量资源</h3>
-                    <p>无论是差旅，商务，休闲，去到哪里随便看，再也不担心宝宝追不了《老九门》</p>
+                    <h3>星座运程/老黄历</h3>
+                    <p>查看星座今天的运程和老黄历</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div id="fh5co-press" data-section="press">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 section-heading text-center">
-                <h2 class="single-animate animate-press-1">软件安装</h2>
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 subtext single-animate animate-press-2">
-                        <h3>云流量无需等待，秒连接！全面兼容，安卓/IOS系统零风险！</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8 col-md-offset-2">
-            <div class="row row-bottom-padded-lg">
-                <div class="col-md-6 text-center to-animate">
-                    <div class="person">
-                        <a href="ios.html"><img src="picture/person2.jpg" class="img-responsive img-rounded" alt="Person"></a>
-                        <a href="ios.html"><h3 class="name">IOS系统</h3></a>
-                        <div class="position">切换ID安装即可快速使用</div>
-                    </div>
-                </div>
-                <div class="col-md-6 text-center to-animate">
-                    <div class="person">
-                        <a href="and.html"><img src="picture/person3.jpg" class="img-responsive img-rounded" alt="Person"></a>
-                        <a href="and.html"><h3 class="name">安卓系统</h3></a>
-                        <div class="position">一键下载即可安装使用</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div id="fh5co-testimonials" data-section="testimonials">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 section-heading text-center">
-                <h2 class="to-animate">常见问题</h2>
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 subtext to-animate">
-                        <h3>每实际使用1G流量仅扣几M套餐内流量，通过客户端使用的云节流功能，从而实现随时随地无限免费流量上网！</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="box-testimony to-animate">
-                    <blockquote>
-                        <span class="quote"><span><i class="icon-quote-left"></i></span></span>
-                        <p>A、可能由于服务器连接过于频繁，请关闭软件重新登录重新连接即可<br>
-                            B、可能你的手机CPU过热，重启你的手机然后重新登录重新连接即可<br>
-                            C、可能是我们的服务器出现问题了，停止使用然后联系客服即可<br>
-                            D、每个地区所用线路不一样，使用过程中发现会扣掉自身流量套餐的流量，尝试更改手机网络接入点改为wap或者net试一下</p>
-                    </blockquote>
-                    <p class="author">账号正常，连接时却一直连接不上</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="box-testimony to-animate">
-                    <blockquote>
-                        <span class="quote"><span><i class="icon-quote-left"></i></span></span>
-                        <p>因为需要登录苹果美国版商店进行下载软件才可进行云流量的使用，中国苹果商店没有上架该软甲！</p>
-                    </blockquote>
-                    <p class="author">为什么要退出的苹果ID？</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="box-testimony to-animate">
-                    <blockquote>
-                        <span class="quote"><span><i class="icon-quote-left"></i></span></span>
-                        <p>A、由于4G手机数据和通话不在一个网络模式下的原因，用户在接打电话是会断开数据通信，所以在通话之后，需要重新连接软件，然后再继续上网；<br>B、锁屏熄屏或者手机清理后台都有可能造成软件掉线，从而不能使用大猫哥流量；<br>C、用户在观看视频的同时请留意屏幕左上角的小钥匙是否还显示，以防掉线完全消耗你自身的流量，具体消耗比例以测试为准。</p>
-                    </blockquote>
-                    <p class="author">为什么有时候断线连接不上？</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="box-testimony to-animate">
-                    <blockquote>
-                        <span class="quote"><span><i class="icon-quote-left"></i></span></span>
-                        <p>A、本软件在每次登陆或者连接时可能需要损耗50K左右手机套餐流量，手机自带的软件在后台运行会消耗少量流量。<br>
-                            B、在使用过程中如果遇到掉线又重新连接，掉线重新连接需要一定的时间。<br>
-                            C、本软件在部分城市存在盲区包括个别手机品牌型号不能兼容导致不能使用，首次使用时一定要先做测试，确认不会消耗你手机流量套餐的流量后再继续使用。</p>
-                    </blockquote>
-                    <p class="author">使用本软件为什么会消耗本机流量？</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="box-testimony to-animate">
-                    <blockquote>
-                        <span class="quote"><span><i class="icon-quote-left"></i></span></span>
-                        <p>1、关闭你的wifi，开启你的手机流量数据，把所有正在运行的软件都关闭<br>2、如果手机双卡双待，请切换到您用来上网的手机卡。<br>3、不支持手机开热点。</p>
-                    </blockquote>
-                    <p class="author">请问有什么注意事项？</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="box-testimony to-animate">
-                    <blockquote>
-                        <span class="quote"><span><i class="icon-quote-left"></i></span></span>
-                        <p>A、拨打电话时，手机网络会自行中断，通话完成之后软件会自动重新连接，可能有部分手机需要手动重新连接软件。<br>
-                            B、部分手机自带一键清理功能，或者安装360，手机管家，手机助手等此类软件，请将流量库设置为白名单，可以避免部分掉线问题<br>
-                            C、请不要随便恢复手机出厂设置，也不要随便清理手机数据，由此造成的损失自行承担。</p>
-                    </blockquote>
-                    <p class="author">软件在使用的过程中会发生掉线？</p>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
-
-
-
-<hr>
-<footer id="footer" role="contentinfo">
-    <div class="container">
-        <div class="row row-bottom-padded-sm">
-            <div class="col-md-12">
-
-            </div>
-        </div>
-        <div class="row hide">
-            <div class="col-md-12 text-center">
-                <ul class="social social-circle">
-                    <li><a href="#"><i class="icon-twitter"></i></a></li>
-                    <li><a href="#"><i class="icon-facebook"></i></a></li>
-                    <li><a href="#"><i class="icon-youtube"></i></a></li>
-                    <li><a href="#"><i class="icon-pinterest"></i></a></li>
-                    <li><a href="#"><i class="icon-linkedin"></i></a></li>
-                    <li><a href="#"><i class="icon-instagram"></i></a></li>
-                    <li><a href="#"><i class="icon-dribbble"></i></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</footer>
 
 
 

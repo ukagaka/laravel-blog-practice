@@ -29,47 +29,47 @@
                 <div class="invoice-details newpeople" >
                     <div class="form-block">
                         问 候：
-                        <input type="checkbox" @if($data->status == 1) checked @endif class="iswitch iswitch-secondary">
+                        <input type="checkbox" @if(array_key_exists('pet_greeting', $config)) checked @endif class="iswitch iswitch-secondary">
                     </div>
                     <div class="form-block">
                         自言自语：
-                        <input type="checkbox" @if($data->status == 1) checked @endif class="iswitch iswitch-secondary" >
+                        <input type="checkbox" @if(array_key_exists('pet_thinkAloud', $config)) checked @endif class="iswitch iswitch-secondary" >
                     </div>
                     <div class="form-block">
                         聊天功能：
-                        <input type="checkbox" checked class="iswitch iswitch-secondary">
+                        <input type="checkbox" @if(array_key_exists('pet_chatTochuncai', $config)) checked @endif class="iswitch iswitch-secondary">
                     </div>
                     <div class="form-block">
                         喂食功能：
-                        <input type="checkbox" checked class="iswitch iswitch-secondary">
+                        <input type="checkbox" @if(array_key_exists('pet_foods', $config)) checked @endif class="iswitch iswitch-secondary">
                     </div>
                     <div class="form-block">
                         进入后台：
-                        <input type="checkbox" checked class="iswitch iswitch-secondary">
+                        <input type="checkbox" @if(array_key_exists('pet_blogmanage', $config)) checked @endif class="iswitch iswitch-secondary">
                     </div>
                     <div class="form-block">
                         显示三围：
-                        <input type="checkbox" checked class="iswitch iswitch-secondary">
+                        <input type="checkbox" @if(array_key_exists('pet_measurements', $config)) checked @endif class="iswitch iswitch-secondary">
                     </div>
                     <div class="form-block">
                         查看包裹：
-                        <input type="checkbox" checked class="iswitch iswitch-secondary">
+                        <input type="checkbox" @if(array_key_exists('pet_package', $config)) checked @endif class="iswitch iswitch-secondary">
                     </div>
                     <div class="form-block">
                         运送物资：
-                        <input type="checkbox" checked class="iswitch iswitch-secondary">
+                        <input type="checkbox" @if(array_key_exists('pet_material', $config)) checked @endif class="iswitch iswitch-secondary">
                     </div>
                     <div class="form-block">
                         星座运势：
-                        <input type="checkbox" checked class="iswitch iswitch-secondary">
+                        <input type="checkbox" @if(array_key_exists('pet_constellation', $config)) checked @endif class="iswitch iswitch-secondary">
                     </div>
                     <div class="form-block">
                         周公解梦：
-                        <input type="checkbox" checked class="iswitch iswitch-secondary">
+                        <input type="checkbox" @if(array_key_exists('pet_oneiromancy', $config)) checked @endif class="iswitch iswitch-secondary">
                     </div>
                     <div class="form-block">
                         老黄历：
-                        <input type="checkbox" checked class="iswitch iswitch-secondary">
+                        <input type="checkbox" @if(array_key_exists('pet_calendar', $config)) checked @endif class="iswitch iswitch-secondary">
                     </div>
                 </div>
             </div>

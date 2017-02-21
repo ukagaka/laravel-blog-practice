@@ -13,7 +13,12 @@ class InterfaceController extends Controller
         $user= Auth::user();
         $code = 100;
         $chuncaiName = 'default';
-        $config = \App\pet::$config;
+        $config = [];
+        if($user){
+            $config = \App\pet::get_wcc_config($user->id);
+            unset($config['pet_greeting']);
+            unset($config['pet_thinkAloud']);
+        }
         if ($user) {
             $userPet = DB::table('user_pet')->where('user_id', $user->id)->where('status', 1)->first();
             if($userPet){

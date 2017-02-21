@@ -9,6 +9,8 @@ class Pet extends Model{
     protected $table = 'user_pet';
     public $timestamps = false;
     public static $config = [
+        'pet_greeting' => '问候',
+        'pet_thinkAloud' => '自言自语',
         'pet_shownotice' => '显示公告',
         'pet_chatTochuncai' => '聊天功能',
         'pet_foods' => '喂食功能',
@@ -21,6 +23,25 @@ class Pet extends Model{
         'pet_calendar' => '老黄历',
         'pet_closechuncai' => '隐藏伪春菜',
     ];
+
+    static function get_wcc_config($uid)
+    {
+        $pet = self::where('user_id', $uid)->where('status', 1)->first();
+        if(!$pet){
+            abort('404');
+        }
+        $config = json_decode($pet->config, true);
+        if(!is_array($config)){
+            $config = [];
+        }
+        $data = [];
+        foreach (self::$config as $k => $v) {
+            if(!array_key_exists($k, $config)){
+                $data[$k] = $v;
+            }
+        }
+        return $data;
+    }
 
     static function get_wcc_lifetime($starttime)
     {
