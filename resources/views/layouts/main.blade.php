@@ -78,12 +78,25 @@
                             <span class="title">新建伪春菜</span>
                         </a>
                     </li>
+                    <li @if(Request::is('event') || Request::is('event/edit/*'))class="active"@endif>
+                        <a href="{{ url('/event') }}">
+                            <i class="fa-bell-o"></i>
+                            <span class="title">通告列表</span>
+                        </a>
+                    </li>
+                    <li @if(Request::is('event/create'))class="active"@endif>
+                        <a href="{{ url('/event/create') }}">
+                            <i class="fa-comments-o"></i>
+                            <span class="title">新建通告</span>
+                        </a>
+                    </li>
                     <li @if(Request::is('user') || Request::is('user/edit/*'))class="active"@endif>
                         <a href="{{ url('/user') }}">
                             <i class="fa-user"></i>
                             <span class="title">管理员列表</span>
                         </a>
                     </li>
+
                 @endif
             </ul>
 

@@ -55,4 +55,13 @@ class UserController extends Controller
         return view('/user.info', compact('data'));
     }
 
+    public function getUser($id)
+    {
+        $user = User::where('id', $id)->first();
+        if($user){
+            return json_encode(['code'=>'success', 'data'=>['nick' => $user->name, 'uid' => $user->id]]);
+        }
+        return json_encode(['code'=>'fail']);
+    }
+
 }

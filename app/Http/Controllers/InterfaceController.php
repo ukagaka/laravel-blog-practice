@@ -50,7 +50,8 @@ class InterfaceController extends Controller
     {
         $user= Auth::user();
         if($user){
-            return response()->json(['code'=>1,'msg'=>'我是系统公告，我是系统公告，我是系统公告']);
+            $data = DB::table('event')->where('action', 7)->where('receiver', 0)->orderBy('time', 'desc')->first();
+            return response()->json(['code'=>1,'msg'=>$data->content]);
         }else{
             return response()->json(['code'=>0,'msg'=>"伪春菜：前方高能，请出示您的通行证~<div class='pet_login'><a href='/login'>出示通行证</a></div>"]);
         }
@@ -64,8 +65,7 @@ class InterfaceController extends Controller
         } else {
             return [];
         }
-        $pet = DB::table('pet_info')->where('id', $userPet->id)->first();
-        $petInfo = array('uid'=>$user->id,'grade'=>$pet->level,'exp'=>10,'eat'=>10,'hungry'=>10,'charm'=>10,'static'=>10,'name'=>$userPet->nick,'type'=>1,'time'=>$userPet->created_at);
+        $petInfo = array('uid'=>$user->id,'grade'=>$userPet->exp,'exp'=>$userPet->exp,'eat'=>10,'hungry'=>10,'charm'=>10,'static'=>10,'name'=>$userPet->nick,'type'=>1,'time'=>$userPet->created_at);
         if($userPet->uname){
             $uname = $userPet->uname;
         } else {
@@ -117,7 +117,7 @@ class InterfaceController extends Controller
             10002=>'我最爱吃薯片了',
             10003=>'可乐陪薯片才是最棒的',
         );
-        $uid = 1;
+        $uid = Auth::user()->id;
         $dataTime = date("Y-m-d");
         if($type < 10000 && $type > 0){
             if(\App\Pet::threeMeals($type)){

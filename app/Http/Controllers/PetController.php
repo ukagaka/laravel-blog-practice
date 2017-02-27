@@ -40,7 +40,6 @@ class PetController extends Controller
         $userId = Auth::user()->id;
         $data = DB::table('user_pet')->where('id', $id)->where('status', 1)->first();
         $config = \App\Pet::get_wcc_config($userId);
-        print_r($config);exit;
         return view('pet.info', compact('data', 'config'));
     }
 

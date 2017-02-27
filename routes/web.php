@@ -33,6 +33,7 @@ Route::get('/user/edit/{id}', 'UserController@edit');
 Route::post('/user/update', 'UserController@update');
 Route::get('/user/create', 'UserController@create');
 Route::get('/user/info', 'UserController@info');
+Route::get('/user/getUser/{id}', 'UserController@getUser');
 
 Route::get('interface/getchuncai', 'InterfaceController@getChuncai');
 Route::get('interface/getnotice', 'InterfaceController@getNotice');
@@ -45,3 +46,11 @@ Route::get('interface/constellation', 'InterfaceController@constellation');
 Route::get('interface/calendar', 'InterfaceController@calendar');
 Route::get('interface/oneiromancy', 'InterfaceController@oneiromancy');
 Route::get('interface/mission', 'InterfaceController@mission');
+
+Route::get('/event', 'EventController@index');
+Route::post('/event', 'EventController@store');
+Route::get('/event/edit/{id}', 'EventController@edit');
+Route::get('/event/create', 'EventController@create');
+Route::post('/event/update', 'EventController@update');
+Route::get('/event/delete/{id}', 'EventController@delete');
+Route::get('/event/modify', 'EventController@modify');
