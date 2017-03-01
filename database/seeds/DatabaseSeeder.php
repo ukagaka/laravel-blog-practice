@@ -23,7 +23,6 @@ class DatabaseSeeder extends Seeder
         DB::table('pet')->insert([
             'name' => 'default',
             'user_id' => 1,
-            'demand' => json_decode(['gold'=> 1, 'level' => 1]),
         ]);
 
         DB::table('user_pet')->insert([
