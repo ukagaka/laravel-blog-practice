@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('pet')->insert([
             'name' => 'default',
+            'nick' => '弹幕娘',
             'user_id' => 1,
         ]);
 
