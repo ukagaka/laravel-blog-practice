@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('event')->insert([
             'sender' => '系统',
-            'sener_id' => 0,
+            'sender_id' => 0,
             'action' => 7,
             'target' => 0,
             'target_type' => 'announce',
