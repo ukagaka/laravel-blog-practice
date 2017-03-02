@@ -18,8 +18,8 @@ class CreatePetTable extends Migration
             $table->string('name');
             $table->string('nick');
             $table->integer('user_id');
-            $table->json('demand');
-            $table->json('config');
+            $table->json('demand')->nullable();
+            $table->json('config')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamp('created_at');
         });

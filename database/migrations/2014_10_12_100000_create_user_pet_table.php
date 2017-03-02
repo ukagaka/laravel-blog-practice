@@ -20,8 +20,8 @@ class CreateUserPetTable extends Migration
             $table->string('nick')->nullable();
             $table->string('uname')->nullable();
             $table->integer('exp')->default(0);
-            $table->json('config');
-            $table->json('state');
+            $table->json('config')->nullable();
+            $table->json('state')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
