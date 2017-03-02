@@ -19,7 +19,7 @@ class CreateEventTable extends Migration
             $table->integer('sender_id')->default(0);
             $table->tinyInteger('action');
             $table->integer('target')->default(0);
-            $table->tinyInteger('target_type');
+            $table->string('target_type');
             $table->text('content')->nullable();
             $table->string('type');
             $table->integer('receiver')->default(0);
