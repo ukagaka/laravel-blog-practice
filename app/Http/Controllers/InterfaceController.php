@@ -15,7 +15,7 @@ class InterfaceController extends Controller
         $chuncaiName = 'default';
         $config = [];
         if($user){
-            $config = \App\pet::get_wcc_config($user->id);
+            $config = \App\Pet::get_wcc_config($user->id);
             unset($config['pet_greeting']);
             unset($config['pet_thinkAloud']);
         }
