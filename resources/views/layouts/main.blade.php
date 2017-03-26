@@ -69,7 +69,7 @@
                     <li @if(Request::is('pet/all'))class="active"@endif>
                         <a href="{{ url('/pet/all') }}">
                             <i class="fa-columns"></i>
-                            <span class="title">伪春菜</span>
+                            <span class="title">全部伪春菜</span>
                         </a>
                     </li>
                     <li @if(Request::is('pet/create'))class="active"@endif >

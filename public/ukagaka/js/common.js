@@ -163,7 +163,7 @@ function pet_init(){
                 $("#pet_getmenu").css("display", "none");
                 petWCC.pet_chuncaiSay("马上就跳转到后台管理页面去了哦～～～",2);
                 setTimeout(function(){
-                    window.location.href = '/';
+                    window.location.href = '/pet';
                 }, 2000);
             });
             $("#pet_foods").click(function(){       //吃 零 食

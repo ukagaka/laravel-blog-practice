@@ -69,9 +69,10 @@
                     <li><a href="#" data-nav-section="services"><span>产品介绍</span></a></li>
                     @if (Auth::user())
                         <li><a target="_blank" href="{{ url('/pet') }}" >{{ Auth::user()->name }}</a></li>
+                        <li><a href="{{ url('/logout') }}">退出</a></li>
                     @else
-                        <li><a target="_blank" href="{{ url('/login') }}" class="btn btn-primary btn-sm">登录</a></li>
-                        <li><a target="_blank" href="{{ url('/register') }}" class="btn btn-primary btn-sm">注册</a></li>
+                        <li><a href="{{ url('/login') }}" class="btn btn-primary btn-sm">登录</a></li>
+                        <li><a href="{{ url('/register') }}" class="btn btn-primary btn-sm">注册</a></li>
                     @endif
                 </ul>
             </div>

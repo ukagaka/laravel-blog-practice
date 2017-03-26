@@ -63,11 +63,6 @@ class PetController extends Controller
             $query = $query->where('name', $key);
             $columns = ['name' => $key];
         }
-        if ($request->has('user_id')){
-            $key = $request->input('user_id');
-            $query = $query->where('user_id', $key);
-            $columns = ['user_id' => $key];
-        }
         if ($request->has('nick')){
             $key = $request->input('nick');
             $query = $query->where('nick', $key);

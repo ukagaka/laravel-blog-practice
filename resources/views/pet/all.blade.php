@@ -54,9 +54,6 @@
                             状态
                         </th>
                         <th>
-                            创建人
-                        </th>
-                        <th>
                             操作
                         </th>
                     </tr>
@@ -78,7 +75,6 @@
                                 <div class="form-block">
                                     <input type="checkbox" @if($v->status == 1) checked @endif class="iswitch iswitch-secondary" data-action="status" data-id="{{ $v->id }}">
                                 </div>
-                            <td>{{ $v->user_id }}</td>
                             <td>
                                 <a href="{{ url('/pet/edit/'.$v->id) }}" class="btn btn-secondary btn-sm btn-icon icon-left">
                                     查看

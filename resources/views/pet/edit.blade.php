@@ -18,8 +18,7 @@
 
                         <ul class="list-unstyled">
                             <li><strong>昵称：{{ $data->nick }}</strong></li>
-                            <?php $extra = DB::table('pet_info')->where('pet_id', $data->id)->first();?>
-                            <li>等级：{{ $extra->level }}</li>
+                            <li>等级：{{ $extra->exp }}</li>
                             <li>简介：{{ $extra->avatar }}</li>
                         </ul>
                     </div>

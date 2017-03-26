@@ -75,8 +75,7 @@
                             </td>
                             <td>{{ $v->id }}</td>
                             <td>{{ $v->nick }}</td>
-                            <?php $petInfo = DB::table('pet_info')->where('pet_id', $v->id)->first();?>
-                            <td>{{ $petInfo?$petInfo->level:1 }}</td>
+                            <td>{{ $v->exp }}</td>
                             <td>
                                 <div class="form-block">
                                     <input type="checkbox" @if($v->status == 1) checked @endif class="iswitch iswitch-secondary" data-action="status" data-id="{{ $v->id }}">
