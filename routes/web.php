@@ -34,6 +34,8 @@ Route::post('/user/update', 'UserController@update');
 Route::get('/user/create', 'UserController@create');
 Route::get('/user/info', 'UserController@info');
 Route::get('/user/getUser/{id}', 'UserController@getUser');
+Route::get('/reset', 'UserController@reset');
+Route::post('/reset', 'UserController@postReset');
 
 Route::get('interface/getchuncai', 'InterfaceController@getChuncai');
 Route::get('interface/getnotice', 'InterfaceController@getNotice');
