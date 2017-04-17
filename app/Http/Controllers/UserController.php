@@ -42,7 +42,6 @@ class UserController extends Controller
         $id = $data['id'];
         unset($data['_token']);
         unset($data['id']);
-        print_r($data);exit;
         $group = User::where('id', $id)->update($data);
         if($group){
             return redirect('/user');
