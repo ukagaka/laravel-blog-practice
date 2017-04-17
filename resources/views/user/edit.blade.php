@@ -38,7 +38,7 @@
                             <label class="col-sm-2 control-label">用户组</label>
 
                             <div class="col-sm-10">
-                                <select name="groupid" class="form-control">
+                                <select name="group_id" class="form-control">
                                     @foreach(\App\User::$group as $v => $k)
                                         <option value="{{ $v }}" @if($data->group_id == $v) selected="selected" @endif>{{ $k }}</option>
                                     @endforeach
