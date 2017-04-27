@@ -34,9 +34,7 @@ class Pet extends Model{
         $config = json_decode($pet->config, true);
         if(!$config){
             foreach (self::$config as $k => $v) {
-                if(!array_key_exists($k, $config)){
-                    $config[$k] = $v;
-                }
+                $config[$k] = $v;
             }
         }
         return $config;
