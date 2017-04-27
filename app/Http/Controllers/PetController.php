@@ -38,7 +38,7 @@ class PetController extends Controller
     public function info($id)
     {
         $userId = Auth::user()->id;
-        $data = DB::table('user_pet')->where('id', $id)->where('status', 1)->first();
+        $data = DB::table('user_pet')->where('id', $id)->where('user_id', $userId)->where('status', 1)->first();
         $config = \App\Pet::get_wcc_config($userId);
         return view('pet.info', compact('data', 'config'));
     }
@@ -103,6 +103,19 @@ class PetController extends Controller
             return json_encode(['code'=>'success']);
         }
         return json_encode(['code'=>'fail']);
+    }
+
+    public function updateConfig(Request $request)
+    {
+        $id = $request->input('petId');
+        $type = $request->input('type');
+        $value = $request->input('value');
+        $data = \App\Pet::update_wcc_config($id, $type, $value);
+        if($data){
+            return json_encode(['code'=>'success']);
+        }
+        return json_encode(['code'=>'fail']);
+
     }
 
 }

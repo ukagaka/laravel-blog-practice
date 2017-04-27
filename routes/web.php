@@ -20,39 +20,50 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 Route::get('/logout', 'Auth\LoginController@logout');
 
-Route::get('/pet', 'PetController@index');
-Route::get('/pet/all', 'PetController@all');
-Route::get('/pet/create', 'PetController@create');
-Route::post('/pet', 'PetController@store');
-Route::get('/pet/modify', 'PetController@modify');
-Route::get('/pet/info/{id}', 'PetController@info');
-Route::get('/pet/edit/{id}', 'PetController@edit');
 
-Route::get('/user', 'UserController@index');
-Route::get('/user/edit/{id}', 'UserController@edit');
-Route::post('/user/update', 'UserController@update');
-Route::get('/user/create', 'UserController@create');
-Route::get('/user/info', 'UserController@info');
-Route::get('/user/getUser/{id}', 'UserController@getUser');
+Route::group(['prefix' => 'pet'], function () {
+    Route::get('/', 'PetController@index');
+    Route::get('all', 'PetController@all');
+    Route::get('create', 'PetController@create');
+    Route::post('pet', 'PetController@store');
+    Route::get('modify', 'PetController@modify');
+    Route::get('info/{id}', 'PetController@info');
+    Route::get('edit/{id}', 'PetController@edit');
+    Route::get('updateConfig', 'PetController@updateConfig');
+});
+
+Route::group(['prefix' => 'user'], function () {
+    Route::get('/', 'UserController@index');
+    Route::get('edit/{id}', 'UserController@edit');
+    Route::post('update', 'UserController@update');
+    Route::get('create', 'UserController@create');
+    Route::get('info', 'UserController@info');
+    Route::get('getUser/{id}', 'UserController@getUser');
+});
+
 Route::get('/reset', 'UserController@reset');
 Route::post('/reset', 'UserController@postReset');
 
-Route::get('interface/getchuncai', 'InterfaceController@getChuncai');
-Route::get('interface/getnotice', 'InterfaceController@getNotice');
-Route::get('interface/measurements', 'InterfaceController@measurements');
-Route::get('interface/package', 'InterfaceController@package');
-Route::get('interface/talkcon', 'InterfaceController@talkcon');
-Route::get('interface/eat', 'InterfaceController@eat');
-Route::get('interface/carrying', 'InterfaceController@carrying');
-Route::get('interface/constellation', 'InterfaceController@constellation');
-Route::get('interface/calendar', 'InterfaceController@calendar');
-Route::get('interface/oneiromancy', 'InterfaceController@oneiromancy');
-Route::get('interface/mission', 'InterfaceController@mission');
+Route::group(['prefix' => 'interface'], function () {
+    Route::get('getchuncai', 'InterfaceController@getChuncai');
+    Route::get('getnotice', 'InterfaceController@getNotice');
+    Route::get('measurements', 'InterfaceController@measurements');
+    Route::get('package', 'InterfaceController@package');
+    Route::get('talkcon', 'InterfaceController@talkcon');
+    Route::get('eat', 'InterfaceController@eat');
+    Route::get('carrying', 'InterfaceController@carrying');
+    Route::get('constellation', 'InterfaceController@constellation');
+    Route::get('calendar', 'InterfaceController@calendar');
+    Route::get('oneiromancy', 'InterfaceController@oneiromancy');
+    Route::get('mission', 'InterfaceController@mission');
+});
 
-Route::get('/event', 'EventController@index');
-Route::post('/event', 'EventController@store');
-Route::get('/event/edit/{id}', 'EventController@edit');
-Route::get('/event/create', 'EventController@create');
-Route::post('/event/update', 'EventController@update');
-Route::get('/event/delete/{id}', 'EventController@delete');
-Route::get('/event/modify', 'EventController@modify');
+Route::group(['prefix' => 'event'], function () {
+    Route::get('/', 'EventController@index');
+    Route::post('/', 'EventController@store');
+    Route::get('edit/{id}', 'EventController@edit');
+    Route::get('create', 'EventController@create');
+    Route::post('update', 'EventController@update');
+    Route::get('delete/{id}', 'EventController@delete');
+    Route::get('modify', 'EventController@modify');
+});

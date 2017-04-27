@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 class Pet extends Model{
 
@@ -31,16 +32,36 @@ class Pet extends Model{
             abort('404');
         }
         $config = json_decode($pet->config, true);
-        if(!is_array($config)){
-            $config = [];
-        }
-        $data = [];
-        foreach (self::$config as $k => $v) {
-            if(!array_key_exists($k, $config)){
-                $data[$k] = $v;
+        if(!$config){
+            foreach (self::$config as $k => $v) {
+                if(!array_key_exists($k, $config)){
+                    $config[$k] = $v;
+                }
             }
         }
-        return $data;
+        return $config;
+    }
+
+    static function update_wcc_config($id, $type, $value)
+    {
+        $userId = Auth::user()->id;
+        $pet = self::where('id', $id)->where('user_id', $userId)->where('status', 1)->first();
+        $config = json_decode($pet->config, true);
+        if (!$config) {
+            foreach (self::$config as $k => $v) {
+                $config[$k] = $v;
+            }
+        }
+        if ($value) {
+            $config[$type] = self::$config[$type];
+        } else {
+            unset($config[$type]);
+        }
+        $pet->config = json_encode($config);
+        if ($pet->save()) {
+            return true;
+        }
+        return false;
     }
 
     static function get_wcc_lifetime($starttime)
