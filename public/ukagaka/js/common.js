@@ -570,7 +570,7 @@ function pet_init(){
             var figure = '';
             for(var i = 0;i < data.length;i++){
                 figure = data[i]['name'];
-                answer += "<div id='pet_answer' onclick=petWCC.pet_getMission('"+data[i]['key']+"')>"+figure+"："+data[i]['content']+"</div>";
+                answer += "<div id='pet_answer' style='cursor:pointer' onclick=petWCC.pet_getMission('"+data[i]['key']+"')>"+figure+"："+data[i]['content']+"</div>";
             }
             $("#pet_dialog_chat_contents").append(answer);
         },
