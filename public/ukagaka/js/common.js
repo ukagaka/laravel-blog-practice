@@ -2,7 +2,7 @@ var pet_imageWidth;
 var pet_imageheight;
 var pet_name = '';
 var pet_num = 3;
-var pet_missionState = 0; //剧情状态  0为关闭剧情，1为开启剧情。可以在特定的条件下，通过更改pet_missionState来开启剧情
+// var pet_missionState = 0; //剧情状态  0为关闭剧情，1为开启剧情。可以在特定的条件下，通过更改pet_missionState来开启剧情
 $(document).ready(pet_init());   //通过调用pet_init()来进行初始化伪春菜。
 function pet_init(){
     $.getJSON('/interface/getchuncai',function(data){
@@ -41,7 +41,7 @@ function pet_init(){
                 petWCC.pet_closeInit();    //如果是隐藏，显示隐藏
             }
             var pet_notice = petWCC.pet_getCookie("chuncainotice");
-            if(pet_missionState == 1){
+            if (typeof(pet_missionState) != "undefined") {
                 petWCC.pet_mission();
             }else if(pet_notice == null){
                 petWCC.pet_getNotice();

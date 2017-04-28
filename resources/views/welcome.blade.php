@@ -67,6 +67,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active"><a href="#" data-nav-section="home"><span>网站首页</span></a></li>
                     <li><a href="#" data-nav-section="services"><span>产品介绍</span></a></li>
+                    <li><a href="{{ url('/plot') }}"><span>页面剧情</span></a></li>
                     @if (Auth::user())
                         <li><a target="_blank" href="{{ url('/pet') }}" >{{ Auth::user()->name }}</a></li>
                         <li><a href="{{ url('/logout') }}">退出</a></li>

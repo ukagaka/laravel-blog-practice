@@ -19,6 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 Route::get('/logout', 'Auth\LoginController@logout');
+Route::get('/plot', 'HomeController@plot');
 
 
 Route::group(['prefix' => 'pet'], function () {
