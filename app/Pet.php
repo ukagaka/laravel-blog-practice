@@ -8,7 +8,6 @@ use Auth;
 class Pet extends Model{
 
     protected $table = 'user_pet';
-    public $timestamps = false;
     public static $config = [
         'pet_greeting' => '问候',
         'pet_thinkAloud' => '自言自语',
@@ -28,10 +27,18 @@ class Pet extends Model{
     static function get_wcc_config($uid)
     {
         $pet = self::where('user_id', $uid)->where('status', 1)->first();
-        if(!$pet){
-            abort('404');
+        if ($pet) {
+            $config = json_decode($pet->config, true);
+        } else {
+            $config = false;
+            $userPet = New self;
+            $userPet->user_id = $uid;
+            $userPet->pet_id = 1;
+            $userPet->nick = '暖暖';
+            $userPet->state = json_encode(self::$config);
+            $userPet->config = json_encode(self::$config);
+            $userPet->save();
         }
-        $config = json_decode($pet->config, true);
         if(!$config){
             foreach (self::$config as $k => $v) {
                 $config[$k] = $v;

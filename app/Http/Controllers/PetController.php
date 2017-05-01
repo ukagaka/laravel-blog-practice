@@ -27,7 +27,8 @@ class PetController extends Controller
     {
         $userId = Auth::user()->id;
         $query = DB::table('user_pet')
-            ->leftJoin('pet', 'user_pet.user_id', '=', 'pet.id')
+            ->select('user_pet.id', 'user_pet.user_id', 'user_pet.nick', 'user_pet.uname', 'pet.demand', 'user_pet.exp', 'user_pet.status')
+            ->leftJoin('pet', 'user_pet.pet_id', '=', 'pet.id')
             ->where('user_pet.status', 1)
             ->where('user_pet.user_id', $userId)
             ->orderBy('user_pet.created_at', 'desc');
