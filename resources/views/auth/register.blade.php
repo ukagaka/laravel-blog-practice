@@ -46,7 +46,7 @@
 
                 <div class="form-group">
                     <label class="control-label" for="name">昵称</label>
-                    <input id="name" type="email" class="form-control {{ $errors->has('name') ? 'error' : '' }}"  name="name" value="{{ old('email') }}" required autofocus>
+                    <input id="name" type="text" class="form-control {{ $errors->has('name') ? 'error' : '' }}"  name="name" value="{{ old('email') }}" required autofocus>
                     @if ($errors->has('name'))
                         <label class="error" for="inputError">{{ $errors->first('name') }}</label>
                     @endif
