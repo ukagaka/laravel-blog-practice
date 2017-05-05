@@ -72,12 +72,12 @@
                             <span class="title">全部伪春菜</span>
                         </a>
                     </li>
-                    <li @if(Request::is('pet/create'))class="active"@endif >
-                        <a href="{{ url('pet/create') }}">
-                            <i class="fa-hospital-o"></i>
-                            <span class="title">新建伪春菜</span>
-                        </a>
-                    </li>
+                    {{--<li @if(Request::is('pet/create'))class="active"@endif >--}}
+                        {{--<a href="{{ url('pet/create') }}">--}}
+                            {{--<i class="fa-hospital-o"></i>--}}
+                            {{--<span class="title">新建伪春菜</span>--}}
+                        {{--</a>--}}
+                    {{--</li>--}}
                     <li @if(Request::is('event') || Request::is('event/edit/*'))class="active"@endif>
                         <a href="{{ url('/event') }}">
                             <i class="fa-bell-o"></i>

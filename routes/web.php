@@ -26,7 +26,7 @@ Route::group(['prefix' => 'pet'], function () {
     Route::get('/', 'PetController@index');
     Route::get('all', 'PetController@all');
     Route::get('create', 'PetController@create');
-    Route::post('pet', 'PetController@store');
+    Route::post('/', 'PetController@store');
     Route::get('modify', 'PetController@modify');
     Route::get('info/{id}', 'PetController@info');
     Route::get('edit/{id}', 'PetController@edit');
